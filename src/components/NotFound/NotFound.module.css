@@ -1,0 +1,31 @@
+.container {
+    background-color: #fff8;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    padding: 4rem;
+    overflow: hidden;
+}
+
+.content {
+    color: #222;
+    z-index: 10;
+}
+
+.content h1 {
+    color: #333;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.codigoHttp {
+    z-index: -1;
+    position: absolute;
+    top: 5%;
+    right: 25%;
+    color: #fff9;
+    font-size: 12rem;
+    font-weight: bold;
+    font-family: Helvetica;
+    text-shadow: 0 1px 0 #ccc, 1px 0px 0 #ccc;
+}

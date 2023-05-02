@@ -1,0 +1,75 @@
+.container {
+    width: 70vw;
+    height: 80vh;
+    margin: 5% auto 0;
+    background-color: white;
+    border-radius: .5rem;
+    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, .3), 0 2px 60px 0 rgba(0, 0, 0, .6);
+
+    display: flex;
+}
+
+.imagemLogin {
+    border-radius: .5rem;
+    background-image: url('../../assets/images/logo.jpeg');
+    background-position: center;
+    background-size: cover;
+}
+
+.metadeDaLargura {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.formulario {
+    padding: 0 10%;
+    height: inherit;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formulario label {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.formulario input:not([type="submit"]) {
+    margin: 3% 0 8% 0;
+    height: 2rem;
+    padding: 0 .5rem;
+
+
+
+    outline: none;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.formulario input:not([type="submit"]):focus {
+    background-color: #eee;
+    border-radius: .3rem;
+}
+
+
+.botaoSubmeter {
+    border: 1px solid #06aeb7;
+    background-color: inherit;
+    margin: 5% auto 0;
+    font-size: 1rem;
+    padding: 1rem 3rem;
+    border-radius: 1rem;
+    transition: all .7s;
+    cursor: pointer;
+}
+
+.botaoSubmeter:hover {
+    background-color: rgba(69, 169, 235);
+    padding: 1.5rem 4rem;
+    font-size: 1.35rem;
+    border-radius: 15px;
+    color: white;
+}
