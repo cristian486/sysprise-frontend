@@ -2,14 +2,15 @@ import { IHeader } from '../../types/Headers';
 import FiltroPesquisa from '../FiltroPesquisa';
 import styles from './Tabela.module.css';
 
-interface IProps<T> {
+interface IPropsTabelaDinamica<T> {
     nomeDaTabela: string,
     headers: IHeader[],
     listaDeValores: T[],
+    clickLinha?(id: number): void,
     obterValor(item: T, key: string): string
 }
 
-export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obterValor }: IProps<T>) {
+export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obterValor, clickLinha }: IPropsTabelaDinamica<T>) {
     function renderizerTableHeader() {
         if (headers) {
             return (
@@ -30,7 +31,12 @@ export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obter
         if (listaDeValores) {
             return listaDeValores.map((item: T, key: number) => {
                 return (
-                    <tr key={String(key)}>
+                    <tr key={String(key)} onClick={async () => {
+                        if (clickLinha) {
+                            const itemId = Number(obterValor(item, 'id'));
+                            clickLinha(itemId);
+                        }
+                    }}>
                         {headers.map((header, index) => {
                             return (
                                 <td key={index}>

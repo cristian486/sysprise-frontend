@@ -1,6 +1,6 @@
 export interface IEstado {
-    id?: number,
+    id?: string,
     nome: string,
     codigoIbge: string,
-    sigle: string
+    sigla: string
 }

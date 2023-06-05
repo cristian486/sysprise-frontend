@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import asyncLogin from '../../state/hooks/login/login';
 import styles from './Login.module.css';
-import asyncLogin from '../../state/hooks/login';
 
 export default function Login() {
 

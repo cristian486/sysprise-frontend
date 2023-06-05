@@ -1,25 +1,69 @@
-import { useEffect } from 'react';
-import useListaDeTipos from '../../state/hooks/useListaDeTipos';
-import { headersTipo } from './DefaultValues';
+import useListaDeTipos from '../../state/hooks/listas/useListaDeTipos';
 import Tabela from '../../components/Tabela';
 import FormularioDinamico from '../../components/FormularioDinamico';
 import { ITipo } from '../../types/Pessoa';
+import useAsyncDetalhamento from '../../state/hooks/useAsyncDetalhamento';
+import useAsyncCall from '../../state/hooks/useAsyncCall';
+import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
+import { tipoPadrao } from './base/default';
+import { headersTipo } from './base/headers';
+import { formularioDinamicoState } from '../../state/atom';
+import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 
 export default function Tipo() {
     const listaDeTipos = useListaDeTipos();
+    const asyncDetalhamento = useAsyncDetalhamento<ITipo>();
+    const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
 
-    useEffect(() => {
-        
-    }, []);
+    function obterValor(item: ITipo, key: string) {
+        const result = String(item[key as keyof ITipo]);
+        return result;
+    }
+
+    function clickLinha(id: number) {
+        asyncDetalhamento(`http://localhost:8085/tipo/${id}`).then(resp => {
+            converterObjetoParaValoresIniciais(resp);
+            setFormState(true);
+        });
+    }
+
+    function limparValoresDefinidos() {
+        const valoresLimpos = Object.fromEntries(
+            Object.keys(tipoPadrao.initialValues).map((key) => [key, ''])
+        );
+        tipoPadrao.initialValues = valoresLimpos;
+    }
+
+    function criar(values: { [key: string]: string }) {
+        const obj = { ...values};
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8085/tipo', 'post', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
 
     return (
         <>
-            <Tabela nomeDaTabela={'Lista de Tipos de Pessoa'}
+            <Tabela nomeDaTabela={'Lista de Tipos'}
                 headers={headersTipo}
                 listaDeValores={listaDeTipos}
-                obterValor={(item: ITipo, key: string) => String(item[key as keyof ITipo])} />
+                obterValor={obterValor}
+                clickLinha={clickLinha}
+            />
 
-            {/* <FormularioDinamico /> */}
+            {
+                formSate
+                &&
+                <FormularioDinamico
+                    fields={tipoPadrao.fields}
+                    criar={criar}
+                    atualizar={tipoPadrao.atualizar}
+                    deletar={tipoPadrao.deletar}
+                    title={tipoPadrao.title}
+                    customFields={tipoPadrao.customFields}
+                    initialValues={tipoPadrao.initialValues}
+                    limparValores={limparValoresDefinidos}
+                />
+            }
         </>
     );
 }

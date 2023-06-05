@@ -1,25 +1,63 @@
-import { useEffect } from 'react';
 import FormularioDinamico from '../../components/FormularioDinamico';
 import Tabela from '../../components/Tabela';
-import useListaDeEstados from '../../state/hooks/useListaDeEstados';
+import useListaDeEstados from '../../state/hooks/listas/useListaDeEstados';
 import { IEstado } from '../../types/Estado';
-import { headersEstado } from './DefaultValues';
+import useAsyncDetalhamento from '../../state/hooks/useAsyncDetalhamento';
+import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
+import { estadoPadrao } from './base/default';
+import { headersEstado } from './base/headers';
+import { formularioDinamicoState } from '../../state/atom';
+import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 
 
 export default function Estado() {
     const listaDeEstados = useListaDeEstados();
+    const asyncDetalhamento = useAsyncDetalhamento<IEstado>();
+    const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
 
-    useEffect(() => {
-    }, []);
+    function obterValor(item: IEstado, key: string) {
+        const result = String(item[key as keyof IEstado]);
+        return result;
+    }
+
+    function clickLinha(id: number) {
+        asyncDetalhamento(`http://localhost:8084/estado/${id}`).then(resp => {
+            converterObjetoParaValoresIniciais(resp);
+            setFormState(true);
+
+        });
+    }
+
+    function limparValoresDefinidos() {
+        const valoresLimpos = Object.fromEntries(
+            Object.keys(estadoPadrao.initialValues).map((key) => [key, ''])
+        );
+        estadoPadrao.initialValues = valoresLimpos;
+    }
 
     return (
         <>
-            <Tabela nomeDaTabela={'Lista de Vendas'}
+            <Tabela nomeDaTabela={'Lista de Estados'}
                 headers={headersEstado}
                 listaDeValores={listaDeEstados}
-                obterValor={(item: IEstado, key: string) => String(item[key as keyof IEstado])} />
+                obterValor={obterValor}
+                clickLinha={clickLinha}
+            />
 
-            {/* <FormularioDinamico /> */}
+            {
+                formSate
+                &&
+                <FormularioDinamico
+                    fields={estadoPadrao.fields}
+                    criar={estadoPadrao.criar}
+                    atualizar={estadoPadrao.atualizar}
+                    deletar={estadoPadrao.deletar}
+                    title={estadoPadrao.title}
+                    customFields={estadoPadrao.customFields}
+                    initialValues={estadoPadrao.initialValues}
+                    limparValores={limparValoresDefinidos}
+                />
+            }
         </>
     );
 }

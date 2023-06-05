@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PaginaDefault from './components/PaginaDefault';
-import Login from './pages/Login';
 import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
+import PaginaDefault from './components/PaginaDefault';
+import Login from './pages/Login';
 import LoadSpinner from './components/LoadSpinner';
 import Venda from './pages/Venda';
 import NotFound from './components/NotFound';
@@ -20,6 +20,8 @@ import Tipo from './pages/Tipo';
 import Usuario from './pages/Usuario';
 import PessoaFisica from './pages/PessoaFisica';
 import PessoaJuridica from './pages/PessoaJuridica';
+import Estoque from './pages/Estoque';
+
 
 export default function Rotas() {
 
@@ -37,6 +39,7 @@ export default function Rotas() {
                                 <Route path='/cidade' element={<Cidade />} />
                                 <Route path='/compra' element={<Compra />} />
                                 <Route path='/estado' element={<Estado />} />
+                                <Route path='/estoque' element={<Estoque />} />
                                 <Route path='/funcionario' element={<Funcionario />} />
                                 <Route path='/pessoafisica' element={<PessoaFisica />} />
                                 <Route path='/pessoajuridica' element={<PessoaJuridica />} />

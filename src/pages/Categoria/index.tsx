@@ -1,18 +1,58 @@
-import { useEffect } from 'react';
-import useListaDeCategorias from '../../state/hooks/useListaDeCategorias';
-import { categoriaPadrao, headersCategoria } from './DefaultValues';
+import useListaDeCategorias from '../../state/hooks/listas/useListaDeCategorias';
 import { ICategoria } from '../../types/Categoria';
 import Tabela from '../../components/Tabela';
 import FormularioDinamico from '../../components/FormularioDinamico';
-import useFormularioDinamicoState from '../../state/hooks/useFormularioDinamico';
+import useAsyncDetalhamento from '../../state/hooks/useAsyncDetalhamento';
+import { converterObjetoParaValoresIniciais } from './base/converterObjetos';
+import { headersCategoria } from './base/headers';
+import { categoriaPadrao } from './base/default';
+import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
+import { formularioDinamicoState } from '../../state/atom';
+import useAsyncCall from '../../state/hooks/useAsyncCall';
+
 
 export default function Categoria() {
+
     const listaDeCategorias = useListaDeCategorias();
-    const formSate = useFormularioDinamicoState();
+    const asyncDetalhamento = useAsyncDetalhamento<ICategoria>();
+    const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
 
     function obterValor(item: ICategoria, key: string) {
         const result = String(item[key as keyof ICategoria]);
         return result;
+    }
+
+    function clickLinha(id: number) {
+        asyncDetalhamento(`http://localhost:8080/categoria/${id}`).then(resp => {
+            converterObjetoParaValoresIniciais(resp);
+            setFormState(true);
+        });
+    }
+
+    function limparValoresDefinidos() {
+        const valoresLimpos = Object.fromEntries(
+            Object.keys(categoriaPadrao.initialValues).map((key) => [key, ''])
+        );
+        categoriaPadrao.initialValues = valoresLimpos;
+    }
+
+    function criar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8080/categoria', 'post', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function deletar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        const id = obj['id'];
+        useCall('http://localhost:8080/categoria/' + id, 'delete', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function atualizar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8080/categoria', 'put', obj).then(() => location.reload()).catch(error => console.log(error));
     }
 
     return (
@@ -20,15 +60,23 @@ export default function Categoria() {
             <Tabela nomeDaTabela={'Lista de Categorias'}
                 headers={headersCategoria}
                 listaDeValores={listaDeCategorias}
-                obterValor={obterValor} />
+                obterValor={obterValor}
+                clickLinha={clickLinha}
+            />
 
-            {formSate.mostrar &&
+            {
+                formSate
+                &&
                 <FormularioDinamico
                     fields={categoriaPadrao.fields}
-                    onSubmit={categoriaPadrao.onSubmit}
+                    criar={criar}
+                    atualizar={atualizar}
+                    deletar={deletar}
                     title={categoriaPadrao.title}
                     customFields={categoriaPadrao.customFields}
-                    initialValues={categoriaPadrao.initialValues} />
+                    initialValues={categoriaPadrao.initialValues}
+                    limparValores={limparValoresDefinidos}
+                />
             }
         </>
     );

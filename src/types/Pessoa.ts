@@ -1,6 +1,3 @@
-import { ICidade } from './Cidade';
-import { IGenero } from './Funcionario';
-
 export interface IPessoa {
     id: number,
     endereco: IEndereco,
@@ -9,36 +6,39 @@ export interface IPessoa {
 }
 
 export interface IPessoaFisica extends IPessoa {
-    razaoSocail: string,
+    nome: string,
+    cpf: string,
+    genero: 'MASCULINO' | 'FEMININO',
+    dataDeNascimento: string
+}
+
+export interface IPessoaJuridica extends IPessoa {
+    razaoSocial: string,
     nomeFantasia: string,
     cnpj: string
 }
 
-export interface IPessoaJuridica extends IPessoa {
-    nome: string,
-    cpf: string,
-    genero: IGenero,
-    dataDeNascimento: Date
-}
-
 export interface IContato {
-    id?: number,
+    id?: string,
     email: string,
-    telefone: string
+    telefone: string,
+    pessoa_id?: number
 }
 
 export interface IEndereco {
-    id: number,
+    id?: string,
     rua: string,
     numero: number,
     bairro: string,
     complemento: string,
     cep: string,
-    cidade: ICidade
+    cidade_id?: string;
+    estado_id?: string;
 }
 
 
 export interface ITipo {
-    id: number,
-    nome: string
+    id?: string,
+    nome: string,
+    checked?: boolean
 }

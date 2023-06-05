@@ -2,7 +2,7 @@ import { ICategoria } from './Categoria';
 import { IUnidade } from './Unidade';
 
 export interface IProduto {
-    id?: number,
+    id?: string,
     nome: string,
     descricao: string,
     observacao: string,

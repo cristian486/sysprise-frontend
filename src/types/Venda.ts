@@ -1,11 +1,11 @@
 import { IPessoaFisica, IPessoaJuridica } from './Pessoa';
 
 export interface IVenda {
-    id?: number,
+    id?: string,
     documento:string,
     observacao: string,
-    dataDeCriacao?: Date,
-    dataDeEntrega: Date,
+    dataDeCriacao?: string,
+    dataDeEntrega: string,
     status?: string,
     desconto: number,
     valorTotal: number,
@@ -15,9 +15,10 @@ export interface IVenda {
 }
 
 export interface IItemDaVenda {
-    id?: number,
-    produto_id: number,
+    id?: string,
+    produto_id: string,
     nomeDoProduto: string,
     quantidade: number,
-    valorTotal: number
+    valorTotal: number,
+    mostrar?: boolean
 }

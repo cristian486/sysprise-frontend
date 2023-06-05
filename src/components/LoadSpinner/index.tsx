@@ -1,5 +1,5 @@
-import styles from './LoadSpinner.module.css';
 import { ThreeDots } from 'react-loader-spinner';
+import styles from './LoadSpinner.module.css';
 
 export default function LoadSpinner() {
     return (

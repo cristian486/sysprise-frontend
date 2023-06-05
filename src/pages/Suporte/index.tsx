@@ -1,5 +1,5 @@
-import styles from './Suporte.module.css';
 import { AiOutlinePhone, AiFillGithub, AiOutlineMail, AiFillLinkedin } from 'react-icons/ai';
+import styles from './Suporte.module.css';
 
 export default function Suporte() {
     return (
