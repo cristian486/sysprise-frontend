@@ -1,0 +1,27 @@
+
+.base {
+    display: flex;
+    width: 100%;
+}
+
+.base > div {
+    width: 100%;
+}
+
+.base label {
+    display: block;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    padding: .7rem 0;
+    border: none;
+    margin-top: .8%;
+    border-bottom: 1px solid #888;
+    border-radius: .2rem;
+}
+
+.container option {
+    padding: .3rem .8rem;
+}

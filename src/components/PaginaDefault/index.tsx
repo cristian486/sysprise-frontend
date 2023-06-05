@@ -1,7 +1,7 @@
-import styles from './PaginaDefault.module.css';
 import { Outlet } from 'react-router-dom';
 import Navegacao from '../Navegacao';
 import PerfilUsuario from '../PerfilUsuario';
+import styles from './PaginaDefault.module.css';
 
 export default function PaginaDefault() {
     return (

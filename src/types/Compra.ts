@@ -1,22 +1,23 @@
 import { IPessoa } from './Pessoa';
 
 export interface ICompra {
-    id?: number,
+    id?: string,
     documento:string,
     observacao: string,
-    dataDeCriacao?: Date,
-    dataDeRecebimento: Date,
+    dataDeCriacao?: string,
+    dataDeRecebimento: string,
     status?: string,
     valorTotal: number,
     pessoa: IPessoa,
-    itensDaVenda: IItemDaCompra[]
+    itensDaCompra: IItemDaCompra[]
 
 }
 
 export interface IItemDaCompra {
-    id?: number,
-    produto_id: number,
+    id?: string,
+    produto_id: string,
     nomeDoProduto: string,
     quantidade: number,
-    valorTotal: number
+    valorTotal: number,
+    mostrar?: boolean
 }

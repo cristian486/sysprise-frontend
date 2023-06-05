@@ -1,5 +1,5 @@
 import ImagemPerfil from '../../assets/images/perfil2.webp';
-import logout from '../../state/hooks/logout';
+import logout from '../../state/hooks/login/logout';
 import useDadosUsuarioAutenticado from '../../state/hooks/useDadosUsuarioAutenticado';
 import styles from './Usuario.module.css';
 
@@ -12,7 +12,7 @@ export default function PerfilUsuario() {
                 <img src={ImagemPerfil} alt="Foto de perfil do usuário"/>
             </div>
             <p>
-                {dadosUsuario.nome}
+                {dadosUsuario.nome || 'Cristian'}
             </p>
             <p> 
                 <button onClick={() => useLogout()} className={styles.logout}>logout</button>

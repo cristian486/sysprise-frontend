@@ -1,24 +1,17 @@
 import { IEndereco } from './Pessoa';
 
 export interface IFuncionario {
-    id?: number,
+    id?: string,
     nome: string,
     idade: number,
     cpf: string,
     rg: string,
     orgaoEmissor: string,
-    genero: IGenero,
-    dataDeNascimento: Date,
-    estadoCivil:IEstadoCivil,
+    genero: 'MASCULINO' | 'FEMININO',
+    dataDeNascimento: string,
+    estadoCivil: 'SOLTEIRO' | 'CASADO' | 'SEPARADO' | 'DIVORCIADO' | 'VIUVO',
     cargo: string,
+    remuneracao: number,
     jornadaDeTrabalho: string,
     endereco: IEndereco
-}
-
-export interface IGenero {
-    genero: 'MASCULINO' | 'FEMININO'
-}
-
-export interface IEstadoCivil {
-    estadoCivil: 'SOLTEIRO' | 'CASADO' | 'SEPARADO' | 'DIVORCIADO' | 'VIUVO'
 }

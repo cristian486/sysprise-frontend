@@ -216,7 +216,7 @@
 
 
 /* 5 */
-/* .btn_5 {
+.btn_6 {
     height: 40px;
     line-height: 42px;
     padding: 0;
@@ -225,14 +225,14 @@
     background: linear-gradient(0deg, rgba(255, 27, 0, 1) 0%, rgba(251, 75, 2, 1) 100%);
 }
 
-.btn_5:hover {
+.btn_6:hover {
     color: #f0094a;
     background: transparent;
     box-shadow: none;
 }
 
-.btn_5:before,
-.btn_5:after {
+.btn_6:before,
+.btn_6:after {
     content: '';
     position: absolute;
     top: 0;
@@ -247,18 +247,18 @@
     transition: 400ms ease all;
 }
 
-.btn_5:after {
+.btn_6:after {
     right: inherit;
     top: inherit;
     left: 0;
     bottom: 0;
 }
 
-.btn_5:hover:before,
-.btn_5:hover:after {
+.btn_6:hover:before,
+.btn_6:hover:after {
     width: 100%;
     transition: 800ms ease all;
-} */
+}
 
 
 /* 3 */
@@ -369,12 +369,12 @@
     padding: 0 .5rem;
 }
 
-.formulario .pequeno > input,
-.formulario .medio > input,
-.formulario .grande > input,
-.formulario .pequeno > select,
-.formulario .medio > select,
-.formulario .grande > select {
+.formulario .pequeno>input,
+.formulario .medio>input,
+.formulario .grande>input,
+.formulario .pequeno>select,
+.formulario .medio>select,
+.formulario .grande>select {
     width: 100%;
     border: none;
     margin-top: .8%;
@@ -387,7 +387,9 @@
     background-color: #bbb7;
 }
 
-.formulario input, .formulario  label, .formulario  select {
+.formulario input,
+.formulario label,
+.formulario select {
     display: block;
 }
 
@@ -403,6 +405,10 @@
 .formulario .customField {
     margin-top: 8%;
     width: 100%;
+}
+
+.formulario .customField>div {
+    margin-top: 5%;
 }
 
 .botaoFormulario {

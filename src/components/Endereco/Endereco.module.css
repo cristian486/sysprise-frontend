@@ -1,0 +1,47 @@
+
+.formulario {
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.formulario .medio {
+    width: 50%;
+    padding: 0 .5rem;
+}
+
+.formulario .grande {
+    width: 100%;
+    padding: 0 .5rem;
+}
+
+.formulario .medio > input,
+.formulario .grande > input,
+.formulario .medio > select,
+.formulario .grande > select {
+    width: 100%;
+    border: none;
+    margin-top: .8%;
+    border-bottom: 1px solid #888;
+    border-radius: .2rem;
+    height: 100%;
+}
+
+.formulario input:disabled {
+    background-color: #bbb7;
+}
+
+.formulario input, .formulario  label, .formulario  select {
+    display: block;
+}
+
+.formulario label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.formulario label:not(:first-child) {
+    margin-top: 8%;
+}

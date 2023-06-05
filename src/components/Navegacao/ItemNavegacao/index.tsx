@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './ItemNavegacao.module.css';
 import { ItemListaNavegacao, ItemSubListaNavegacao } from '../../../types/Navegacao';
+import styles from './ItemNavegacao.module.css';
 
 
 export default function ItemNavegacao({ item }: ItemListaNavegacao) {

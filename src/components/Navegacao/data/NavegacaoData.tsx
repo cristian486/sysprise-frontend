@@ -6,6 +6,7 @@ import * as MdIcons from 'react-icons/md';
 import * as TbIcons from 'react-icons/tb';
 import * as BiIcons from 'react-icons/bi';
 import * as BsIcons from 'react-icons/bs';
+import * as CiIcons from 'react-icons/ci';
 
 export const SidebarData = [
     {
@@ -40,6 +41,13 @@ export const SidebarData = [
         title: 'Estado',
         path: '/estado',
         icon: <BsIcons.BsPinMapFill />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />
+    },
+    {
+        title: 'Estoque',
+        path: '/estoque',
+        icon: <CiIcons.CiBoxes />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />
     },

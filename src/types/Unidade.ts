@@ -1,5 +1,5 @@
 export interface IUnidade {
-    id?: number,
+    id?: string,
     nome: string,
     abreviacao: string
 }
