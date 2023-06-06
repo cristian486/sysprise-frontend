@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+<h1 align="center"> Sysprise </h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+</p>
 
-## Available Scripts
+<img src="./assets/images/telaPrincipal.jpeg" style="border-radius: 5%; display: block; max-width: 80vw; margin: 0 auto;"/>
 
-In the project directory, you can run:
+## Índice
 
-### `npm start`
+* [Descrição do Projeto](#descrição-do-projeto)
+* [Status do Projeto](#status-do-Projeto)
+* [Funcionalidades e Demonstração da Aplicação](#funcionalidades-e-demonstração-da-aplicação)
+* [Tecnologias utilizadas](#tecnologias-utilizadas)
+* [Licença](#licença)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Descrição do Projeto
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Esta é uma das partes em desenvolvimento de um projeto que tem o objetivo de fornecer ao usuário uma interface simples e intuitiva de um sistema ERP, sendo construída com base no framework ReactJS.
 
-### `npm test`
+## Status do Projeto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+:construction: Projeto em construção :construction:
 
-### `npm run build`
+## Funcionalidades e Demonstração da Aplicação
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Atualmente o sistema possibilita o CRUD de pessoa física e jurídica, produto, funcionário, usuário, cidade, tipo de pessoa, cidade, estado, endereço, contatos, unidade, venda e compra.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Tela de Login
+![Tela de Login](./assets/images/tela_login.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Tela de Inicial
+![Tela de Inicial](./assets/images/tela_inicial.png)
 
-### `npm run eject`
+### Tela de Suporte
+![Tela de Suporte](./assets/images/suporte.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Tela de Produtos
+![Tela de Produtos](./assets/images/tela_produtos.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Tela de Cadastro de Compra de Material
+![Tela de Compra de Material](./assets/images/cadastro_compra.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Tecnologias utilizadas
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- ``React``
+- ``Recoil``
+- ``ESLint``
+- ``VSCode``
+- ``Typescript``
+- ``React-Icons``
+- ``React-Spinner``
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Licença
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+GNU GENERAL PUBLIC LICENSE v3
