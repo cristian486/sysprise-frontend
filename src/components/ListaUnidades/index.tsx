@@ -1,10 +1,12 @@
 import useListaDeUnidades from '../../state/hooks/listas/useListaDeUnidades';
 import styles from './ListaUnidades.module.css';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { unidadeState } from '../../state/atom';
+import { listaDeUnidadesParaCadastroState, unidadeState } from '../../state/atom';
+import { IUnidade } from '../../types/Unidade';
 
 export default function ListaDeUnidades() {
-    const listaDeUnidades = useListaDeUnidades();
+    //const listaDeUnidades = useListaDeUnidades();
+    const [listaDeUnidades, _] = useGenericRecoilAtom<IUnidade[]>(listaDeUnidadesParaCadastroState);
     const [unidadeDoProduto, setUnidade] = useGenericRecoilAtom<string>(unidadeState);
 
     return (

@@ -7,8 +7,9 @@ import useAsyncCall from '../../state/hooks/useAsyncCall';
 import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { tipoPadrao } from './base/default';
 import { headersTipo } from './base/headers';
-import { formularioDinamicoState } from '../../state/atom';
+import { formularioDinamicoState, listaDeTipoState } from '../../state/atom';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Tipo() {
     const listaDeTipos = useListaDeTipos();
@@ -45,9 +46,10 @@ export default function Tipo() {
         <>
             <Tabela nomeDaTabela={'Lista de Tipos'}
                 headers={headersTipo}
-                listaDeValores={listaDeTipos}
+                listaDeValores={listaDeTipos.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8085/tipo' atomo={listaDeTipoState}  first={listaDeTipos.first} last={listaDeTipos.last} />}
             />
 
             {

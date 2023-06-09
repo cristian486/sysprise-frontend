@@ -6,8 +6,10 @@ import useAsyncDetalhamento from '../../state/hooks/useAsyncDetalhamento';
 import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { estadoPadrao } from './base/default';
 import { headersEstado } from './base/headers';
-import { formularioDinamicoState } from '../../state/atom';
+import { formularioDinamicoState, listaDeEstadoState } from '../../state/atom';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
+import PaginacaoDinamica from '../../components/Paginacao';
+import useAsyncCall from '../../state/hooks/useAsyncCall';
 
 
 export default function Estado() {
@@ -35,13 +37,33 @@ export default function Estado() {
         estadoPadrao.initialValues = valoresLimpos;
     }
 
+    function criar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8084/estado', 'post', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function deletar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        const id = obj['id'];
+        useCall('http://localhost:8084/estado/' + id, 'delete', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function atualizar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8084/estado', 'put', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
     return (
         <>
             <Tabela nomeDaTabela={'Lista de Estados'}
                 headers={headersEstado}
-                listaDeValores={listaDeEstados}
+                listaDeValores={listaDeEstados.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8084/estado' atomo={listaDeEstadoState}  first={listaDeEstados.first} last={listaDeEstados.last} />}
             />
 
             {
@@ -49,9 +71,9 @@ export default function Estado() {
                 &&
                 <FormularioDinamico
                     fields={estadoPadrao.fields}
-                    criar={estadoPadrao.criar}
-                    atualizar={estadoPadrao.atualizar}
-                    deletar={estadoPadrao.deletar}
+                    criar={criar}
+                    atualizar={atualizar}
+                    deletar={deletar}
                     title={estadoPadrao.title}
                     customFields={estadoPadrao.customFields}
                     initialValues={estadoPadrao.initialValues}

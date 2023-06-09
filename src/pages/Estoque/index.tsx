@@ -1,12 +1,14 @@
+import PaginacaoDinamica from '../../components/Paginacao';
 import Tabela from '../../components/Tabela';
 import { listaDeEstoqueState } from '../../state/atom';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 import { IEstoque } from '../../types/Estoque';
+import { IPageable } from '../../types/IPageable';
 import { headersEstoque } from './base/headers';
 
 export default function Estoque() {
 
-    const [listaDeEstoque, _] = useGenericRecoilAtom<IEstoque[]>(listaDeEstoqueState);
+    const [listaDeEstoque, _] = useGenericRecoilAtom<IPageable<IEstoque[]>>(listaDeEstoqueState);
 
     console.log(listaDeEstoque);
 
@@ -23,9 +25,10 @@ export default function Estoque() {
         <>
             <Tabela nomeDaTabela={'Lista de Estoque'}
                 headers={headersEstoque}
-                listaDeValores={listaDeEstoque}
+                listaDeValores={listaDeEstoque.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8086/estoque' atomo={listaDeEstoqueState}  first={listaDeEstoque.first} last={listaDeEstoque.last} />}
             />
         </>
     );

@@ -12,20 +12,18 @@ import { IFuncionario } from '../../types/Funcionario';
 import { IPessoa, IPessoaFisica, IPessoaJuridica, ITipo } from '../../types/Pessoa';
 import { IUsuario } from '../../types/Usuario';
 import { IEstoque } from '../../types/Estoque';
+import { IPageable } from '../../types/IPageable';
 
 export const asyncBuscarListaDeVendas = selector({
     key: 'asyncBuscarListaDeVendas',
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8087';
-        try {
-            const respostaHttp = await axios.get(`${url}/venda`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeVendas: IVenda[] = await respostaHttp.data.content;
-            return listaDeVendas;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/venda`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeVendas: IPageable<IVenda[]> = await respostaHttp.data;
+        return listaDeVendas;
+
     }
 });
 
@@ -34,14 +32,10 @@ export const asyncBuscarListaDeCompras = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8088';
-        try {
-            const respostaHttp = await axios.get(`${url}/compra?size=10000`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeCompras: ICompra[] = await respostaHttp.data.content;
-            return listaDeCompras;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/compra`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeCompras: IPageable<ICompra[]> = await respostaHttp.data;
+        return listaDeCompras;
     }
 });
 
@@ -50,14 +44,9 @@ export const asyncBuscarListaDeProdutos = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8082';
-        try {
-            const respostaHttp = await axios.get(`${url}/produto?size=100`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeProdutos: IProduto[] = await respostaHttp.data.content;
-            return listaDeProdutos;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+        const respostaHttp = await axios.get(`${url}/produto`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeProdutos: IPageable<IProduto[]> = await respostaHttp.data;
+        return listaDeProdutos;
     }
 });
 
@@ -66,14 +55,23 @@ export const asyncBuscarListaDeUnidades = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8081';
-        try {
-            const respostaHttp = await axios.get(`${url}/unidade?size=100`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeUnidades: IUnidade[] = await respostaHttp.data.content;
-            return listaDeUnidades;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/unidade`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeUnidades: IPageable<IUnidade[]> = await respostaHttp.data;
+        return listaDeUnidades;
+
+    }
+});
+
+export const asyncBuscarListaDeUnidadesParaCadastro = selector({
+    key: 'asyncBuscarListaDeUnidadesParaCadastro',
+    get: async () => {
+        const dadosUsuario = useDadosUsuarioAutenticado();
+        const url = process.env.BACKEND || 'http://localhost:8081';
+
+        const respostaHttp = await axios.get(`${url}/unidade?size=9999999`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeUnidades: IUnidade[] = await respostaHttp.data.content;
+        return listaDeUnidades;
     }
 });
 
@@ -82,30 +80,37 @@ export const asyncBuscarListaDeCategorias = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8080';
-        try {
-            const respostaHttp = await axios.get(`${url}/categoria?size=100`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeCategorias: ICategoria[] = await respostaHttp.data.content;
-            return listaDeCategorias;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/categoria`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeCategorias: IPageable<ICategoria[]> = await respostaHttp.data;
+        return listaDeCategorias;
+
     }
 });
+
+export const asyncBuscarListaDeCategoriasParaCadastro = selector({
+    key: 'asyncBuscarListaDeCategoriasParaCadastro',
+    get: async () => {
+        const dadosUsuario = useDadosUsuarioAutenticado();
+        const url = process.env.BACKEND || 'http://localhost:8080';
+
+        const respostaHttp = await axios.get(`${url}/categoria?size=999999`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeCategorias: ICategoria[] = await respostaHttp.data.content;
+        return listaDeCategorias;
+    }
+});
+
 
 export const asyncBuscarListaDeCidades = selector({
     key: 'asyncBuscarListaDeCidades',
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8084';
-        try {
-            const respostaHttp = await axios.get(`${url}/cidade`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeCidades: ICidade[] = await respostaHttp.data.content;
-            return listaDeCidades;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/cidade`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeCidades: IPageable<ICidade[]> = await respostaHttp.data;
+        return listaDeCidades;
+
     }
 });
 
@@ -114,14 +119,24 @@ export const asyncBuscarListaDeEstados = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8084';
-        try {
-            const respostaHttp = await axios.get(`${url}/estado?size=100`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeEstados: IEstado[] = await respostaHttp.data.content;
-            return listaDeEstados;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/estado`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeEstados: IPageable<IEstado[]> = await respostaHttp.data;
+        return listaDeEstados;
+
+    }
+});
+
+export const asyncBuscarListaDeEstadosParaCadastro = selector({
+    key: 'asyncBuscarListaDeEstadosParaCadastro',
+    get: async () => {
+        const dadosUsuario = useDadosUsuarioAutenticado();
+        const url = process.env.BACKEND || 'http://localhost:8084';
+
+        const respostaHttp = await axios.get(`${url}/estado?size=999999`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeEstados: IEstado[] = await respostaHttp.data.content;
+        return listaDeEstados;
+
     }
 });
 
@@ -129,15 +144,11 @@ export const asyncBuscarListaDeFuncionarios = selector({
     key: 'asyncBuscarListaDeFuncionarios',
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
-        const url = process.env.BACKEND || 'http://localhost:8085';
-        try {
-            const respostaHttp = await axios.get(`${url}/funcionario`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeFuncionarios: IFuncionario[] = await respostaHttp.data.content;
-            return listaDeFuncionarios;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+        const url = process.env.BACKEND || 'http://localhost:8080';
+
+        const respostaHttp = await axios.get(`${url}/funcionario`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeFuncionarios: IPageable<IFuncionario[]> = await respostaHttp.data;
+        return listaDeFuncionarios;
     }
 });
 
@@ -146,14 +157,24 @@ export const asyncBuscarListaDeTipos = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8085';
-        try {
-            const respostaHttp = await axios.get(`${url}/tipo`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeTipos: ITipo[] = await respostaHttp.data.content;
-            return listaDeTipos;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/tipo`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeTipos: IPageable<ITipo[]> = await respostaHttp.data;
+        return listaDeTipos;
+
+    }
+});
+
+
+export const asyncBuscarListaDeTiposParaCadastro = selector({
+    key: 'asyncBuscarListaDeTiposParaCadastro',
+    get: async () => {
+        const dadosUsuario = useDadosUsuarioAutenticado();
+        const url = process.env.BACKEND || 'http://localhost:8085';
+
+        const respostaHttp = await axios.get(`${url}/tipo?size=999999`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeTipos: ITipo[] = await respostaHttp.data.content;
+        return listaDeTipos;
     }
 });
 
@@ -162,14 +183,11 @@ export const asyncBuscarListaDeUsuarios = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8080';
-        try {
-            const respostaHttp = await axios.get(`${url}/usuario`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeUsuarios: IUsuario[] = await respostaHttp.data.content;
-            return listaDeUsuarios;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/usuario`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeUsuarios: IPageable<IUsuario[]> = await respostaHttp.data;
+        return listaDeUsuarios;
+
     }
 });
 
@@ -178,14 +196,11 @@ export const asyncBuscarListaDePessoaFisica = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8085';
-        try {
-            const respostaHttp = await axios.get(`${url}/pessoafisica`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDePessoa: IPessoaFisica[] = await respostaHttp.data.content;
-            return listaDePessoa;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/pessoafisica`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDePessoa: IPageable<IPessoaFisica[]> = await respostaHttp.data;
+        return listaDePessoa;
+
     }
 });
 
@@ -194,14 +209,11 @@ export const asyncBuscarListaDePessoaJuridica = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8085';
-        try {
-            const respostaHttp = await axios.get(`${url}/pessoajuridica`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDePessoa: IPessoaJuridica[] = await respostaHttp.data.content;
-            return listaDePessoa;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/pessoajuridica`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDePessoa: IPageable<IPessoaJuridica[]> = await respostaHttp.data;
+        return listaDePessoa;
+
     }
 });
 
@@ -210,14 +222,11 @@ export const asyncBuscarListaDeEstoque = selector({
     get: async () => {
         const dadosUsuario = useDadosUsuarioAutenticado();
         const url = process.env.BACKEND || 'http://localhost:8086';
-        try {
-            const respostaHttp = await axios.get(`${url}/estoque`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
-            const listaDeEstoque: IEstoque[] = await respostaHttp.data.content;
-            return listaDeEstoque;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+
+        const respostaHttp = await axios.get(`${url}/estoque`, { headers: { 'Content-Type': 'application/json', 'Authorization': `${dadosUsuario.token}` } });
+        const listaDeEstoque: IPageable<IEstoque[]> = await respostaHttp.data;
+        return listaDeEstoque;
+
     }
 });
 

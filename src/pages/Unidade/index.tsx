@@ -7,12 +7,13 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { unidadePadrao } from './base/default';
 import { headersUnidade } from './base/headers';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { formularioDinamicoState } from '../../state/atom';
+import { formularioDinamicoState, listaDeUnidadesState } from '../../state/atom';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Unidade() {
 
-    const listaDeUnidades : IUnidade[] = useListaDeUnidades();
+    const listaDeUnidades = useListaDeUnidades();
     const asyncDetalhamento = useAsyncDetalhamento<IUnidade>();
     const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
 
@@ -58,9 +59,10 @@ export default function Unidade() {
         <>
             <Tabela nomeDaTabela={'Lista de Unidades'}
                 headers={headersUnidade}
-                listaDeValores={listaDeUnidades}
+                listaDeValores={listaDeUnidades.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8081/unidade' atomo={listaDeUnidadesState}  first={listaDeUnidades.first} last={listaDeUnidades.last} />}
             />
 
             {

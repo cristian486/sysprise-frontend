@@ -1,5 +1,10 @@
 export interface IPageable<T> {
-    content: T[];
+    content: T;
+    empty: boolean;
+    first: boolean;
+    last: boolean;
+    number: number;
+    numberOfElements: number;
     pageable: {
         offset: number;
         pageNumber: number;

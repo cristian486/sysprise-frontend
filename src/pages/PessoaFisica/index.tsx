@@ -10,17 +10,18 @@ import { headersPessoaFisica } from './base/headers';
 import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { pessoaFisicaPadrao } from './base/default';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { cidadeState, contatosState, enderecoState, estadoState, formularioDinamicoState, listaDeCidadesDoEstadoState, tiposState } from '../../state/atom';
+import { cidadeState, contatosState, enderecoState, estadoState, formularioDinamicoState, listaDeCidadesDoEstadoState, listaDePessoaFisicaState, tiposState } from '../../state/atom';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
 import { IPageable } from '../../types/IPageable';
 import { ICidade } from '../../types/Cidade';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function PessoaFisica() {
     const listaPessoaFisica = useListaDePessoaFisica();
     const asyncDetalhamento = useAsyncDetalhamento<IPessoaFisica>();
     const [cidade, setCidade] = useGenericRecoilAtom<string>(cidadeState);
     const [estado, setEstadoState] = useGenericRecoilAtom<string>(estadoState);
-    const asyncDetalhamentoCidades = useAsyncDetalhamento<IPageable<ICidade>>();
+    const asyncDetalhamentoCidades = useAsyncDetalhamento<IPageable<ICidade[]>>();
     const [tipos, setTiposSelecionados] = useGenericRecoilAtom<string[]>(tiposState);
     const [endereco, setEnderecoState] = useGenericRecoilAtom<IEndereco>(enderecoState);
     const [contatos, setContatosState] = useGenericRecoilAtom<IContato[]>(contatosState);
@@ -96,9 +97,10 @@ export default function PessoaFisica() {
         <>
             <Tabela nomeDaTabela={'Lista de Pessoas Físicas'}
                 headers={headersPessoaFisica}
-                listaDeValores={listaPessoaFisica}
+                listaDeValores={listaPessoaFisica.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8085/pessoafisica' atomo={listaDePessoaFisicaState}  first={listaPessoaFisica.first} last={listaPessoaFisica.last} />}
             />
 
             {

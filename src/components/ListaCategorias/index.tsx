@@ -1,12 +1,13 @@
 import styles from './ListaCategorias.module.css';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 import { ICategoria } from '../../types/Categoria';
-import { categoriaState, listaDeCategoriasState } from '../../state/atom';
+import { categoriaState, listaDeCategoriasParaCadastroState, listaDeCategoriasState } from '../../state/atom';
+import { IPageable } from '../../types/IPageable';
 
 
 export default function ListaDeCategorias() {
 
-    const [listaDeCategorias, setListaDeCategorias] = useGenericRecoilAtom<ICategoria[]>(listaDeCategoriasState);
+    const [listaDeCategorias, setListaDeCategorias] = useGenericRecoilAtom<ICategoria[]>(listaDeCategoriasParaCadastroState);
     const [categoriaDoProduto, setCategoria] = useGenericRecoilAtom<string>(categoriaState);
 
 

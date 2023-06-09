@@ -10,10 +10,11 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { pessoaJuridicaPadrao } from './base/default';
 import { headersPessoaJuridica } from './base/headers';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { cidadeState, contatosState, enderecoState, estadoState, formularioDinamicoState, listaDeCidadesDoEstadoState, tiposState } from '../../state/atom';
+import { cidadeState, contatosState, enderecoState, estadoState, formularioDinamicoState, listaDeCidadesDoEstadoState, listaDePessoaJuridicaState, tiposState } from '../../state/atom';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
 import { ICidade } from '../../types/Cidade';
 import { IPageable } from '../../types/IPageable';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function PessoaJuridica() {
     const listaDePessoaJuridica = useListaDePessoaJuridica();
@@ -24,7 +25,7 @@ export default function PessoaJuridica() {
     const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
     const [tipos, setTiposSelecionados] = useGenericRecoilAtom<string[]>(tiposState);
     const [cidade, setCidade] = useGenericRecoilAtom<string>(cidadeState);
-    const asyncDetalhamentoCidades = useAsyncDetalhamento<IPageable<ICidade>>();
+    const asyncDetalhamentoCidades = useAsyncDetalhamento<IPageable<ICidade[]>>();
     const [listaDeCidadesDoEstado, setListaDeCidadesDoEstado] = useGenericRecoilAtom<ICidade[]>(listaDeCidadesDoEstadoState);
 
     pessoaJuridicaPadrao.customFields = [
@@ -96,9 +97,10 @@ export default function PessoaJuridica() {
         <>
             <Tabela nomeDaTabela={'Lista de Pessoas Jurídicas'}
                 headers={headersPessoaJuridica}
-                listaDeValores={listaDePessoaJuridica}
+                listaDeValores={listaDePessoaJuridica.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8085/pessoajuridica' atomo={listaDePessoaJuridicaState}  first={listaDePessoaJuridica.first} last={listaDePessoaJuridica.last} />}
             />
 
             {

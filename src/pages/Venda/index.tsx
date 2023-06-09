@@ -7,12 +7,13 @@ import ListaItensDaVenda from '../../components/ListaItensDaVenda';
 import { vendaPadrao } from './base/default';
 import { converterObjetoParaValoresIniciais } from './base/converterObjetos';
 import { headersVenda } from './base/headers';
-import { atualizarStatusMovimentacaoState, formularioDinamicoState, itensDaVendaState, pessoaDaMovimentacaoState } from '../../state/atom';
+import { atualizarStatusMovimentacaoState, formularioDinamicoState, itensDaVendaState, listaDeVendasState, pessoaDaMovimentacaoState } from '../../state/atom';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 import ListaDeClientes from '../../components/ListaClientes';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
 import AprovarReprovar from '../../components/AprovarReprovar';
 import { IAtualizarStatusMovimentacao } from '../../types/AtualizarStatus';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Venda() {
     const listaDeVendas = useListaDeVendas();
@@ -20,7 +21,7 @@ export default function Venda() {
     const [itens, setItens] = useGenericRecoilAtom<IItemDaVenda[]>(itensDaVendaState);
     const [formSate, setFormState] = useGenericRecoilAtom<boolean>(formularioDinamicoState);
     const [pessoa_id, setClienteId] = useGenericRecoilAtom<string>(pessoaDaMovimentacaoState);
-    const [_, setStatusAtualizacao] =  useGenericRecoilAtom<IAtualizarStatusMovimentacao>(atualizarStatusMovimentacaoState);
+    const [_, setStatusAtualizacao] = useGenericRecoilAtom<IAtualizarStatusMovimentacao>(atualizarStatusMovimentacaoState);
 
     vendaPadrao.customFields = [
         { label: 'Produtos', name: 'itensDaVenda', component: <ListaItensDaVenda /> },
@@ -37,7 +38,7 @@ export default function Venda() {
         asyncDetalhamento(`http://localhost:8087/venda/${id}`).then(resp => {
             converterObjetoParaValoresIniciais(resp);
             setItens(resp.itensDaVenda);
-            setStatusAtualizacao({id: (resp.status === 'Finalizado' || resp.status === 'Cancelado' ? 0 : id), url: 'http://localhost:8087/venda'});
+            setStatusAtualizacao({ id: (resp.status === 'Finalizado' || resp.status === 'Cancelado' ? 0 : id), url: 'http://localhost:8087/venda' });
             setFormState(true);
         });
     }
@@ -48,7 +49,7 @@ export default function Venda() {
         );
         setClienteId('0');
         setItens([]);
-        setStatusAtualizacao({id: 0, url: ''});
+        setStatusAtualizacao({ id: 0, url: '' });
         vendaPadrao.initialValues = valoresLimpos;
     }
 
@@ -63,9 +64,10 @@ export default function Venda() {
         <>
             <Tabela nomeDaTabela={'Lista de Vendas'}
                 headers={headersVenda}
-                listaDeValores={listaDeVendas}
+                listaDeValores={listaDeVendas.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8087/venda' atomo={listaDeVendasState} first={listaDeVendas.first} last={listaDeVendas.last} />}
             />
 
             {
