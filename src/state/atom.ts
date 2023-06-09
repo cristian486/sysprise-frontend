@@ -8,77 +8,117 @@ import { IEstado } from '../types/Estado';
 import { ICompra, IItemDaCompra } from '../types/Compra';
 import { IProduto } from '../types/Produto';
 import { IFuncionario } from '../types/Funcionario';
-import { IContato, IEndereco, IPessoa, IPessoaFisica, IPessoaJuridica, ITipo } from '../types/Pessoa';
-import { asyncBuscarListaDeCategorias, asyncBuscarListaDeCidades, asyncBuscarListaDeClientes, asyncBuscarListaDeCompras, asyncBuscarListaDeEstados, asyncBuscarListaDeEstoque, asyncBuscarListaDeFornecedores, asyncBuscarListaDeFuncionarios, asyncBuscarListaDePessoaFisica, asyncBuscarListaDePessoaJuridica, asyncBuscarListaDeProdutos, asyncBuscarListaDeTipos, asyncBuscarListaDeUnidades, asyncBuscarListaDeUsuarios, asyncBuscarListaDeVendas } from './selector/selector';
+import { IContato, IEndereco, IPessoaFisica, IPessoaJuridica, ITipo } from '../types/Pessoa';
+import { asyncBuscarListaDeCategorias, asyncBuscarListaDeCategoriasParaCadastro, asyncBuscarListaDeCidades, asyncBuscarListaDeClientes, asyncBuscarListaDeCompras, asyncBuscarListaDeEstados, asyncBuscarListaDeEstadosParaCadastro, asyncBuscarListaDeEstoque, asyncBuscarListaDeFornecedores, asyncBuscarListaDeFuncionarios, asyncBuscarListaDePessoaFisica, asyncBuscarListaDePessoaJuridica, asyncBuscarListaDeProdutos, asyncBuscarListaDeTipos, asyncBuscarListaDeTiposParaCadastro, asyncBuscarListaDeUnidades, asyncBuscarListaDeUnidadesParaCadastro, asyncBuscarListaDeUsuarios, asyncBuscarListaDeVendas } from './selector/selector';
 import { IEstoque } from '../types/Estoque';
 import { IAtualizarStatusMovimentacao } from '../types/AtualizarStatus';
+import { IPageable } from '../types/IPageable';
 
-export const listaDeVendasState = atom<IVenda[]>({
+export const listaDeVendasState = atom<IPageable<IVenda[]>>({
     key: 'listaDeVendas',
     default: asyncBuscarListaDeVendas
 });
 
-export const listaDeComprasState = atom<ICompra[]>({
+export const listaDeComprasState = atom<IPageable<ICompra[]>>({
     key: 'listaDeCompras',
     default: asyncBuscarListaDeCompras
 });
 
-export const listaDeProdutosState = atom<IProduto[]>({
+export const listaDeProdutosState = atom<IPageable<IProduto[]>>({
     key: 'listaDeProdutos',
     default: asyncBuscarListaDeProdutos
 });
 
-export const listaDeUnidadesState = atom<IUnidade[]>({
+export const listaDeUnidadesState = atom<IPageable<IUnidade[]>>({
     key: 'listaDeUnidades',
     default: asyncBuscarListaDeUnidades
 });
 
-export const listaDeCategoriasState = atom<ICategoria[]>({
+export const listaDeUnidadesParaCadastroState = atom<IUnidade[]>({
+    key: 'listaDeUnidadesParaCadastroState',
+    default: asyncBuscarListaDeUnidadesParaCadastro
+});
+
+export const listaDeCategoriasState = atom<IPageable<ICategoria[]>>({
     key: 'listaDeCategorias',
     default: asyncBuscarListaDeCategorias
 });
 
-export const listaDeCidadeState = atom<ICidade[]>({
+export const listaDeCategoriasParaCadastroState = atom<ICategoria[]>({
+    key: 'listaDeCategoriasParaCadastroState',
+    default: asyncBuscarListaDeCategoriasParaCadastro
+});
+
+export const listaDeCidadeState = atom<IPageable<ICidade[]>>({
     key: 'listaDeCidades',
     default: asyncBuscarListaDeCidades
 });
 
-export const listaDeEstadoState = atom<IEstado[]>({
+export const listaDeEstadoState = atom<IPageable<IEstado[]>>({
     key: 'listaDeEstados',
     default: asyncBuscarListaDeEstados
 });
 
-export const listaDeFuncionarioState = atom<IFuncionario[]>({
+
+export const listaDeEstadoParaCadastroState = atom<IEstado[]>({
+    key: 'listaDeEstadoParaCadastroState',
+    default: asyncBuscarListaDeEstadosParaCadastro
+});
+
+export const listaDeFuncionarioState = atom<IPageable<IFuncionario[]>>({
     key: 'listaDeFuncionarios',
     default: asyncBuscarListaDeFuncionarios
 });
 
-export const listaDeTipoState = atom<ITipo[]>({
+export const listaDeTipoState = atom<IPageable<ITipo[]>>({
     key: 'listaDeTipos',
     default: asyncBuscarListaDeTipos
 });
 
+export const listaDeTipoParaCadastroState = atom<ITipo[]>({
+    key: 'listaDeTipoParaCadastroState',
+    default: asyncBuscarListaDeTiposParaCadastro
+});
 
-export const listaDeUsuarioState = atom<IUsuario[]>({
+export const listaDeUsuarioState = atom<IPageable<IUsuario[]>>({
     key: 'listaDeUsuarios',
     default: asyncBuscarListaDeUsuarios
 });
 
-
-export const listaDePessoaFisicaState = atom<IPessoaFisica[]>({
+export const listaDePessoaFisicaState = atom<IPageable<IPessoaFisica[]>>({
     key: 'listaDePessoaFisica',
     default: asyncBuscarListaDePessoaFisica
 });
 
-export const listaDePessoaJuridicaState = atom<IPessoaJuridica[]>({
+export const listaDePessoaJuridicaState = atom<IPageable<IPessoaJuridica[]>>({
     key: 'listaDePessoaJuridica',
     default: asyncBuscarListaDePessoaJuridica
 });
 
-export const listaDeEstoqueState = atom<IEstoque[]>({
+export const listaDeEstoqueState = atom<IPageable<IEstoque[]>>({
     key: 'listaDeEstoqueState',
     default: asyncBuscarListaDeEstoque
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const categoriaState = atom<string>({
@@ -156,13 +196,10 @@ export const atualizarStatusMovimentacaoState = atom<IAtualizarStatusMovimentaca
 });
 
 
-
-
-
-
-
-
-
+export const paginacaoState = atom<number>({
+    key: 'paginacaoState',
+    default: 1
+});
 
 export const dadosUsuarioAutenticado = atom<IDadosUsuarioAutenticado>({
     key: 'dadosUsuarioAutenticado',

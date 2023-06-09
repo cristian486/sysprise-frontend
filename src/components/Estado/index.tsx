@@ -20,7 +20,7 @@ export default function Estados() {
                         className={styles.container}
                         onChange={(event) => setEstadoState(event.target.value)}>
 
-                        {listaDeEstados.map(est => {
+                        {listaDeEstados.content.map(est => {
                             return (
                                 <option value={est.id} key={est.nome}>
                                     {est.sigla}

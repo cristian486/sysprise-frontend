@@ -17,7 +17,7 @@ const ItemDaCompra: React.FC<ItemDaVendaProps> = ({ item, onChange }) => {
 
 
     useEffect(() => {
-        setListaDePesquisa(listaDeProdutosParaPesquisa);
+        setListaDePesquisa(listaDeProdutosParaPesquisa.content);
     }, []);
 
 

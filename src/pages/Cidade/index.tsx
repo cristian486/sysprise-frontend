@@ -8,7 +8,9 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { cidadePadrao } from './base/default';
 import { headersCidade } from './base/headers';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { estadoState, formularioDinamicoState } from '../../state/atom';
+import { estadoState, formularioDinamicoState, listaDeCidadeState } from '../../state/atom';
+import PaginacaoDinamica from '../../components/Paginacao';
+import useAsyncCall from '../../state/hooks/useAsyncCall';
 
 export default function Cidade() {
     const listaDeCidades = useListaDeCidades();
@@ -44,18 +46,35 @@ export default function Cidade() {
         cidadePadrao.initialValues = valoresLimpos;
     }
 
+
     function criar(values: { [key: string]: string }) {
         const obj = { ...values, estado_id: estado };
-        console.log(obj);
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8084/cidade', 'post', obj).then(() => location.reload()).catch(error => console.log(error));
     }
+
+    function deletar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        const id = obj['id'];
+        useCall('http://localhost:8084/cidade/' + id, 'delete', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function atualizar(values: { [key: string]: string }) {
+        const obj = { ...values, estado_id: estado };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8084/cidade', 'put', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
 
     return (
         <>
             <Tabela nomeDaTabela={'Lista de Cidades'}
                 headers={headersCidade}
-                listaDeValores={listaDeCidades}
+                listaDeValores={listaDeCidades.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8084/cidade' atomo={listaDeCidadeState}  first={listaDeCidades.first} last={listaDeCidades.last} />}
             />
 
             {
@@ -63,9 +82,9 @@ export default function Cidade() {
                 &&
                 <FormularioDinamico
                     fields={cidadePadrao.fields}
-                    criar={cidadePadrao.criar}
-                    atualizar={cidadePadrao.atualizar}
-                    deletar={cidadePadrao.deletar}
+                    criar={criar}
+                    atualizar={atualizar}
+                    deletar={deletar}
                     title={cidadePadrao.title}
                     customFields={cidadePadrao.customFields}
                     initialValues={cidadePadrao.initialValues}

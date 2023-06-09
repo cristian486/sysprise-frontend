@@ -1,3 +1,4 @@
+import React from 'react';
 import { IHeader } from '../../types/Headers';
 import FiltroPesquisa from '../FiltroPesquisa';
 import styles from './Tabela.module.css';
@@ -8,9 +9,10 @@ interface IPropsTabelaDinamica<T> {
     listaDeValores: T[],
     clickLinha?(id: number): void,
     obterValor(item: T, key: string): string
+    paginacao?: React.ReactNode;
 }
 
-export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obterValor, clickLinha }: IPropsTabelaDinamica<T>) {
+export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obterValor, clickLinha, paginacao }: IPropsTabelaDinamica<T>) {
     function renderizerTableHeader() {
         if (headers) {
             return (
@@ -74,7 +76,8 @@ export default function Tabela<T>({ nomeDaTabela, headers, listaDeValores, obter
                     </tbody>
                 </table>
             </section>
-
+            
+            {paginacao}
         </div>
     );
 }

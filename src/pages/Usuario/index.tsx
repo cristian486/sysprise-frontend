@@ -38,7 +38,7 @@ export default function Usuario() {
         <>
             <Tabela nomeDaTabela={'Lista de Usuários'}
                 headers={headersUsuario}
-                listaDeValores={listaDeUsuarios}
+                listaDeValores={listaDeUsuarios.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
             />

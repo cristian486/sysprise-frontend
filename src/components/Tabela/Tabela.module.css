@@ -26,6 +26,8 @@ tbody tr:hover {
     width: 80%;
     height: 70vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 table, th,  td {

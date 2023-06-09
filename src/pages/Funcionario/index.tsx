@@ -6,8 +6,10 @@ import useAsyncDetalhamento from '../../state/hooks/useAsyncDetalhamento';
 import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { funcionarioPadrao } from './base/default';
 import { headersFuncionario } from './base/headers';
-import { formularioDinamicoState } from '../../state/atom';
+import { formularioDinamicoState, listaDeFuncionarioState } from '../../state/atom';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
+import useAsyncCall from '../../state/hooks/useAsyncCall';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Funcionario() {
     const listaDeFuncionarios = useListaDeFuncionarios();
@@ -33,13 +35,33 @@ export default function Funcionario() {
         funcionarioPadrao.initialValues = valoresLimpos;
     }
 
+    function criar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8080/funcionario', 'post', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function deletar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        const id = obj['id'];
+        useCall('http://localhost:8080/funcionario/' + id, 'delete', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
+    function atualizar(values: { [key: string]: string }) {
+        const obj = { ...values };
+        const useCall = useAsyncCall();
+        useCall('http://localhost:8080/funcionario', 'put', obj).then(() => location.reload()).catch(error => console.log(error));
+    }
+
     return (
         <>
             <Tabela nomeDaTabela={'Lista de Funcionários'}
                 headers={headersFuncionario}
-                listaDeValores={listaDeFuncionarios}
+                listaDeValores={listaDeFuncionarios.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8080/funcionario' atomo={listaDeFuncionarioState}  first={listaDeFuncionarios.first} last={listaDeFuncionarios.last} />}
             />
 
             {
@@ -47,9 +69,9 @@ export default function Funcionario() {
                 &&
                 <FormularioDinamico
                     fields={funcionarioPadrao.fields}
-                    criar={funcionarioPadrao.criar}
-                    atualizar={funcionarioPadrao.atualizar}
-                    deletar={funcionarioPadrao.deletar}
+                    criar={criar}
+                    atualizar={atualizar}
+                    deletar={deletar}
                     title={funcionarioPadrao.title}
                     customFields={funcionarioPadrao.customFields}
                     initialValues={funcionarioPadrao.initialValues}

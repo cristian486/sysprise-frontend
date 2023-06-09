@@ -10,7 +10,8 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { produtoPadrao } from './base/default';
 import { headersProduto } from './base/headers';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { categoriaState, formularioDinamicoState, unidadeState } from '../../state/atom';
+import { categoriaState, formularioDinamicoState, listaDeProdutosState, unidadeState } from '../../state/atom';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Produto() {
     const listaDeProdutos = useListaDeProdutos();
@@ -83,9 +84,10 @@ export default function Produto() {
         <>
             <Tabela nomeDaTabela={'Lista de Produtos'}
                 headers={headersProduto}
-                listaDeValores={listaDeProdutos}
+                listaDeValores={listaDeProdutos.content}
                 obterValor={obterValor}
                 clickLinha={detalhamento}
+                paginacao={<PaginacaoDinamica url='http://localhost:8082/produto' atomo={listaDeProdutosState}  first={listaDeProdutos.first} last={listaDeProdutos.last} />}
             />
 
             {

@@ -7,12 +7,13 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjeto';
 import { compraPadrao } from './base/default';
 import { headersCompra } from './base/headers';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { atualizarStatusMovimentacaoState, formularioDinamicoState, itensDaCompraState, pessoaDaMovimentacaoState } from '../../state/atom';
+import { atualizarStatusMovimentacaoState, formularioDinamicoState, itensDaCompraState, listaDeComprasState, pessoaDaMovimentacaoState } from '../../state/atom';
 import ListaItensDaCompra from '../../components/ListaItensDaCompra';
 import ListaDeFornecedores from '../../components/ListaFornecedores';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
 import AprovarReprovar from '../../components/AprovarReprovar';
 import { IAtualizarStatusMovimentacao } from '../../types/AtualizarStatus';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 export default function Compra() {
     const listaDeCompras = useListaDeCompras();
@@ -65,9 +66,10 @@ export default function Compra() {
         <>
             <Tabela nomeDaTabela={'Lista de Compras'}
                 headers={headersCompra}
-                listaDeValores={listaDeCompras}
+                listaDeValores={listaDeCompras.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8088/compra' atomo={listaDeComprasState}  first={listaDeCompras.first} last={listaDeCompras.last} />}
             />
 
             {

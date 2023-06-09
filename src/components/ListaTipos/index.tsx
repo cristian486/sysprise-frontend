@@ -1,10 +1,11 @@
 import useListaDeTipos from '../../state/hooks/listas/useListaDeTipos';
 import ItemTipo from './ItemTipo';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { tiposState } from '../../state/atom';
+import { listaDeTipoParaCadastroState, tiposState } from '../../state/atom';
+import { ITipo } from '../../types/Pessoa';
 
 export default function ListaTipos() {
-    const listDeTipos = useListaDeTipos();
+    const [listDeTipos, _] = useGenericRecoilAtom<ITipo[]>(listaDeTipoParaCadastroState);
     const [tiposSelecionados, setTiposSelecionados] = useGenericRecoilAtom<string[]>(tiposState);
 
     function handleItemChange(id: string) {

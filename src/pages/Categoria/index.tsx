@@ -7,8 +7,9 @@ import { converterObjetoParaValoresIniciais } from './base/converterObjetos';
 import { headersCategoria } from './base/headers';
 import { categoriaPadrao } from './base/default';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
-import { formularioDinamicoState } from '../../state/atom';
+import { formularioDinamicoState, listaDeCategoriasState } from '../../state/atom';
 import useAsyncCall from '../../state/hooks/useAsyncCall';
+import PaginacaoDinamica from '../../components/Paginacao';
 
 
 export default function Categoria() {
@@ -59,9 +60,10 @@ export default function Categoria() {
         <>
             <Tabela nomeDaTabela={'Lista de Categorias'}
                 headers={headersCategoria}
-                listaDeValores={listaDeCategorias}
+                listaDeValores={listaDeCategorias.content}
                 obterValor={obterValor}
                 clickLinha={clickLinha}
+                paginacao={<PaginacaoDinamica url='http://localhost:8080/categoria' atomo={listaDeCategoriasState}  first={listaDeCategorias.first} last={listaDeCategorias.last} />}
             />
 
             {

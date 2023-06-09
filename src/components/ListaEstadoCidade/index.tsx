@@ -5,13 +5,14 @@ import { IPageable } from '../../types/IPageable';
 import styles from './ListaEstadoCidade.module.css';
 import useGenericRecoilAtom from '../../state/hooks/useGenericRecoilAtom';
 import { IEndereco } from '../../types/Pessoa';
-import { cidadeState, enderecoState, estadoState, listaDeCidadesDoEstadoState } from '../../state/atom';
+import { cidadeState, enderecoState, estadoState, listaDeCidadesDoEstadoState, listaDeEstadoParaCadastroState } from '../../state/atom';
+import { IEstado } from '../../types/Estado';
 
 
 export default function ListaEstadoCidade() {
-    const listaDeEstados = useListaDeEstados();
+    const [listaDeEstados, _] = useGenericRecoilAtom<IEstado[]>(listaDeEstadoParaCadastroState);
     const [cidade, setCidade] = useGenericRecoilAtom<string>(cidadeState);
-    const asyncDetalhamento = useAsyncDetalhamento<IPageable<ICidade>>();
+    const asyncDetalhamento = useAsyncDetalhamento<IPageable<ICidade[]>>();
     const [estado, setEstadoState] = useGenericRecoilAtom<string>(estadoState);
     const [listaDeCidadesDoEstado, setListaDeCidadesDoEstado] = useGenericRecoilAtom<ICidade[]>(listaDeCidadesDoEstadoState);
     const [endereco, setEnderecoState] = useGenericRecoilAtom<IEndereco>(enderecoState);

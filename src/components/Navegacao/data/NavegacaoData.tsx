@@ -94,13 +94,6 @@ export const SidebarData = [
         iconOpened: <RiIcons.RiArrowUpSFill />
     },
     {
-        title: 'Usuário',
-        path: '/usuario',
-        icon: <AiIcons.AiOutlineUserAdd />,
-        iconClosed: <RiIcons.RiArrowDownSFill />,
-        iconOpened: <RiIcons.RiArrowUpSFill />
-    },
-    {
         title: 'Venda',
         path: '/venda',
         icon: <AiIcons.AiOutlineDollar />,
